@@ -66,6 +66,88 @@ public class AddressBook {
 
     }
 
+    private void displayContact(){
+        for(Object contact:a){
+//            System.out.println("----------------------------");
+            System.out.println(contact.toString());
+            System.out.println("----------------------------");
+        }
+    }
+
+    private void modifyContact(){
+        System.out.print("Enter Name of the person: ");
+        String fName = scan.nextLine();
+        for (Contact c:a){
+            if (c.getFirstName().equalsIgnoreCase(fName)){
+                System.out.println(c.getFirstName());
+                System.out.println("1. First Name");
+                System.out.println("2. Last Name");
+                System.out.println("3. Address");
+                System.out.println("4. City");
+                System.out.println("5. State");
+                System.out.println("6. zip");
+                System.out.println("7. Phone Number");
+                System.out.println("8. Email");
+                System.out.println("Which detail do you want to modify");
+                int option = scan.nextInt();
+                switch (option){
+                    case 1:
+                        c.setFirstName(validateInput("First name", firstName));
+                        System.out.println("Details modified.");
+                        break;
+                    case 2:
+                        c.setLastName(validateInput("Last name", lastName));
+                        System.out.println("Details modified.");
+                        break;
+                    case 3:
+                        c.setAddress(validateInput("Address", address));
+                        System.out.println("Details modified.");
+                        break;
+                    case 4:
+                        c.setCity(validateInput("City", city));
+                        System.out.println("Details modified.");
+                        break;
+                    case 5:
+                        c.setState(validateInput("State", state));
+                        System.out.println("Details modified.");
+                        break;
+                    case 6:
+                        c.setZip(validateInput("Zip", zip));
+                        System.out.println("Details modified.");
+                        break;
+                    case 7:
+                        c.setPhoneNum(validateInput("Phone Number", phoneNum));
+                        System.out.println("Details modified.");
+                        break;
+                    case 8:
+                        c.setEmail(validateInput("Email", email));
+                        System.out.println("Details modified.");
+                        break;
+                    default:
+                        System.out.println("Invalid! Please choose the correct option");
+                        break;
+                }
+            } else{
+                System.out.println("Contact not found!");
+            }
+        }
+
+
+//        else {
+//            System.out.println(fName + " not found!");
+//            System.out.print("Do you want to Add this contact(y or n): ");
+//            String input = scan.next();
+//            if (input.equalsIgnoreCase("y")){
+//                AddressBook addressBook = new AddressBook();
+//                addressBook.add();
+//            } else {
+//                System.out.println("not yet Implemented");
+//            }
+//        }
+
+    }
+
+
     public static void main(String[] args) {
 
 
@@ -87,8 +169,10 @@ public class AddressBook {
                     addressBook.add();
                     break;
                 case 2:
+                    addressBook.displayContact();
                     break;
                 case 3:
+                    addressBook.modifyContact();
                     break;
                 case 4:
                     break;
