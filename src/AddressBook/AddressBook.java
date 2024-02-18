@@ -147,6 +147,20 @@ public class AddressBook {
 
     }
 
+    private void deleteContact(){
+        System.out.print("Enter Name of the person: ");
+        String fName = scan.nextLine();
+        for (Contact c:a) {
+            if (c.getFirstName().equalsIgnoreCase(fName)) {
+                a.remove(c);
+                System.out.println("Contact deleted");
+                break;
+            }
+            else{
+                System.out.println("Contact not found!");
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -175,6 +189,7 @@ public class AddressBook {
                     addressBook.modifyContact();
                     break;
                 case 4:
+                    addressBook.deleteContact();
                     break;
                 case 5:
                     System.out.println("Thank you.");
