@@ -20,6 +20,7 @@ public class AddressBook {
     private String email = "[a-z0-9]+@gmail.com$";
 
     public String validateInput(String fieldName, String regexPattern) {
+        Scanner scan = new Scanner(System.in);
         System.out.print("Enter " + fieldName + ": ");
         String input = scan.nextLine();
 
@@ -32,7 +33,6 @@ public class AddressBook {
             }
         }
         return input;
-
     }
 
     private void add(){
@@ -67,10 +67,15 @@ public class AddressBook {
     }
 
     private void displayContact(){
-        for(Object contact:a){
-//            System.out.println("----------------------------");
-            System.out.println(contact.toString());
-            System.out.println("----------------------------");
+        if (a.size() > 0){
+            for(Object contact:a){
+                System.out.println(contact.toString());
+                System.out.println("----------------------------");
+            }
+        } else{
+            System.out.println("---------------------------------");
+            System.out.println("No contacts in the Address Book!");
+            System.out.println("---------------------------------");
         }
     }
 
@@ -88,7 +93,7 @@ public class AddressBook {
                 System.out.println("6. zip");
                 System.out.println("7. Phone Number");
                 System.out.println("8. Email");
-                System.out.println("Which detail do you want to modify");
+                System.out.print("Which detail do you want to modify: ");
                 int option = scan.nextInt();
                 switch (option){
                     case 1:
@@ -131,20 +136,6 @@ public class AddressBook {
                 System.out.println("Contact not found!");
             }
         }
-
-
-//        else {
-//            System.out.println(fName + " not found!");
-//            System.out.print("Do you want to Add this contact(y or n): ");
-//            String input = scan.next();
-//            if (input.equalsIgnoreCase("y")){
-//                AddressBook addressBook = new AddressBook();
-//                addressBook.add();
-//            } else {
-//                System.out.println("not yet Implemented");
-//            }
-//        }
-
     }
 
     private void deleteContact(){
@@ -163,7 +154,6 @@ public class AddressBook {
     }
 
     public static void main(String[] args) {
-
 
         AddressBook addressBook = new AddressBook();
 
