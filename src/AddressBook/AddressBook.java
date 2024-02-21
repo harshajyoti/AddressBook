@@ -3,6 +3,7 @@ import Exception.CustomException;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 
@@ -32,12 +33,28 @@ public class AddressBook {
         return input;
     }
 
+    // Check if the contact is there in the hashmap
     public Boolean contactExists(String fName){
         boolean contactExists = a.entrySet().stream()
                 .anyMatch(entry -> entry.getKey().equals(fName));
         return contactExists;
     }
 
+    // Search person by city
+    public static List<String> searchByCity(Map<String, Contact> a, String city) {
+        return a.entrySet().stream()
+                .filter(entry -> entry.getValue().getCity().equals(city))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    // Search person by state
+    public static List<String> searchByState(Map<String, Contact> a, String state) {
+        return a.entrySet().stream()
+                .filter(entry -> entry.getValue().getState().equals(state))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
 
     private void add(){
         // Create a new Object of class Contact
@@ -85,9 +102,54 @@ public class AddressBook {
 
     private void displayContact(){
         if (a.size() > 0){
-            for (String name : a.keySet()){
-                System.out.println(a.get(name).toString());
-                System.out.println("---------------------------------");
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Do you want to search Contact by State or city [y or n]: ");
+            String input = scan.next();
+            if (input.equalsIgnoreCase("y")){
+                System.out.println("1. City");
+                System.out.println("2. State");
+                System.out.println("-----------------------");
+                System.out.print("Please select an option: ");
+                int userInput = scan.nextInt();
+                switch (userInput){
+                    case 1:
+                        System.out.print("Please enter City: ");
+                        String city = scan.next();
+                        List<String> cityList = searchByCity(a, city);
+                        if (cityList.size() > 0){
+                            for(String name : cityList){
+                                System.out.println(name);
+                            }
+                        } else {
+                            System.out.println("---------------------------");
+                            System.out.println("No contact found in " + city);
+                            System.out.println("---------------------------");
+                        }
+                        break;
+                    case 2:
+                        System.out.print("Please enter State: ");
+                        String state = scan.next();
+                        List<String> stateList = searchByState(a, state);
+                        if (stateList.size() > 0){
+                            for(String name : stateList){
+                                System.out.println(name);
+                            }
+                        } else {
+                            System.out.println("---------------------------");
+                            System.out.println("No contact found in " + state);
+                            System.out.println("---------------------------");
+                        }
+                        break;
+                    default:
+                        System.out.println("---------------------------");
+                        System.out.println("Please enter a valid option");
+                        System.out.println("---------------------------");
+                }
+            } else{
+                for (String name : a.keySet()){
+                    System.out.println(a.get(name).toString());
+                    System.out.println("---------------------------------");
+                }
             }
         } else {
             System.out.println("---------------------------------");
@@ -171,9 +233,9 @@ public class AddressBook {
             System.out.println("Contact removed!");
             System.out.println("----------------");
         } else{
-            System.out.println("---------------------------------");
+            System.out.println("------------------");
             System.out.println("Contact not found!");
-            System.out.println("---------------------------------");
+            System.out.println("------------------");
         }
     }
 
