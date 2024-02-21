@@ -69,9 +69,9 @@ public class AddressBook {
             a.put(c.getFirstName(), c);
             System.out.println("Contact added to Address book!");
         } else{
-            System.out.println("---------------------------------");
+            System.out.println("----------------------");
             System.out.println("Contact already exist!");
-            System.out.println("---------------------------------");
+            System.out.println("----------------------");
         }
     }
 
