@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 public class AddressBook {
 
-//    List<Contact> a = new ArrayList<>();
     HashMap<String, Contact> a = new HashMap();
 
     static Scanner scan = new Scanner(System.in);
@@ -33,13 +32,20 @@ public class AddressBook {
         return input;
     }
 
+    public Boolean contactExists(String fName){
+        boolean contactExists = a.entrySet().stream()
+                .anyMatch(entry -> entry.getKey().equals(fName));
+        return contactExists;
+    }
+
+
     private void add(){
         // Create a new Object of class Contact
         Contact c = new Contact();
 
         String fName = validateInput("First name", firstName);
         // Check if the contact is there in the address book
-        if (!a.containsKey(fName)) {
+        if (!contactExists(fName)) {
 
             c.setFirstName(fName);
             System.out.println(c.getFirstName());
@@ -67,7 +73,9 @@ public class AddressBook {
 
             // Adding the first name as key and object as value.
             a.put(c.getFirstName(), c);
+            System.out.println("------------------------------");
             System.out.println("Contact added to Address book!");
+            System.out.println("------------------------------");
         } else{
             System.out.println("----------------------");
             System.out.println("Contact already exist!");
@@ -93,7 +101,7 @@ public class AddressBook {
         String fName = scan.nextLine();
 
         // Check if the contact is there in the address book
-        if (a.containsKey(fName)){
+        if (contactExists(fName)){
             // create an object of Contact class and assign the value to it
             Contact c = a.get(fName);
 
@@ -157,7 +165,7 @@ public class AddressBook {
         String fName = scan.nextLine();
 
         // If the name is there in the hashmap then delete the contact
-        if (a.containsKey(fName)) {
+        if (contactExists(fName)) {
             a.remove(fName);
             System.out.println("----------------");
             System.out.println("Contact removed!");
@@ -185,7 +193,6 @@ public class AddressBook {
                 System.out.println("5. Exit");
                 System.out.println("-----------------------");
                 System.out.print("Please choose an option: ");
-                System.out.println("-----------------------");
                 int option = scan.nextInt();
                 switch (option){
                     case 1:
