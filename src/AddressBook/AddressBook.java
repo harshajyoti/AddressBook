@@ -42,22 +42,6 @@ public class AddressBook {
         return contactExists;
     }
 
-    // Search person by city
-    public static List<String> searchByCity(Map<String, Contact> a, String city) {
-        return a.entrySet().stream()
-                .filter(entry -> entry.getValue().getCity().equals(city))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-    }
-
-    // Search person by state
-    public static List<String> searchByState(Map<String, Contact> a, String state) {
-        return a.entrySet().stream()
-                .filter(entry -> entry.getValue().getState().equals(state))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-    }
-
     private void add(){
         // Create a new Object of class Contact
         Contact c = new Contact();
