@@ -124,15 +124,11 @@ public class AddressBook {
                     case 1:
                         System.out.print("Please enter City: ");
                         String city = scan.next();
-                        ArrayList<String> cityList = new ArrayList<>();
-                        if (personByCity.containsKey(city)){
-                            cityList = personByCity.get(city);
-                        }
-                        if (cityList.size() > 0){
-                            System.out.println("---------------------------");
-                            for(String name : cityList){
-                                System.out.println(name);
-                            }
+                        if (personByCity.containsKey(city)) {
+                            ArrayList<String> cityList = personByCity.get(city);
+                            cityList.stream()
+                                    .peek(name -> System.out.println("---------------------------"))
+                                    .forEach(System.out::println);
                             System.out.println("---------------------------");
                         } else {
                             System.out.println("---------------------------");
@@ -143,16 +139,11 @@ public class AddressBook {
                     case 2:
                         System.out.print("Please enter State: ");
                         String state = scan.next();
-                        List<String> stateList = new ArrayList<>();
-                        if (personByState.containsKey(state)){
-                            stateList = personByState.get(state);
-                        }
-                        if (stateList.size() > 0){
-                            System.out.println("---------------------------");
-                            for(String name : stateList){
-
-                                System.out.println(name);
-                            }
+                        if (personByState.containsKey(state)) {
+                            ArrayList<String> stateList = personByState.get(state);
+                            stateList.stream()
+                                    .peek(name -> System.out.println("---------------------------"))
+                                    .forEach(System.out::println);
                             System.out.println("---------------------------");
                         } else {
                             System.out.println("---------------------------");
