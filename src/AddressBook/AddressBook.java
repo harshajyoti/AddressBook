@@ -80,7 +80,6 @@ public class AddressBook {
             ArrayList<String> personsInCity = personByCity.getOrDefault(c.getCity(), new ArrayList<>());
             personsInCity.add(fName);
             personByCity.put(c.getCity(), personsInCity);
-            System.out.println(personByCity);
 
             c.setState(validateInput("State", state));
             System.out.println(c.getState());
@@ -112,6 +111,19 @@ public class AddressBook {
     private void displayContact(){
         if (a.size() > 0){
             Scanner scan = new Scanner(System.in);
+
+            System.out.println("-------------------------------------");
+            System.out.println("Number of contact in different Cities");
+            personByCity.entrySet().stream()
+                    .map(entry -> entry.getKey() + " : " + entry.getValue().size())
+                    .forEach(System.out::println);
+
+            System.out.println("Number of contact in different States");
+            personByState.entrySet().stream()
+                    .map(entry -> entry.getKey() + " : " + entry.getValue().size())
+                    .forEach(System.out::println);
+            System.out.println("-------------------------------------");
+
             System.out.print("Do you want to search Contact by State or city [y or n]: ");
             String input = scan.next();
             if (input.equalsIgnoreCase("y")){
