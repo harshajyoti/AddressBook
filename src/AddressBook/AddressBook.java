@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 public class AddressBook {
 
     HashMap<String, Contact> a = new HashMap();
+    HashMap<String, ArrayList<String>> personByCity = new HashMap<>();
+    HashMap<String, ArrayList<String>> personByState = new HashMap<>();
 
     static Scanner scan = new Scanner(System.in);
     public String firstName = "[A-Z]{1}[a-z]{2,20}";
@@ -75,9 +77,16 @@ public class AddressBook {
 
             c.setCity(validateInput("City", city));
             System.out.println(c.getCity());
+            ArrayList<String> personsInCity = personByCity.getOrDefault(c.getCity(), new ArrayList<>());
+            personsInCity.add(fName);
+            personByCity.put(c.getCity(), personsInCity);
+            System.out.println(personByCity);
 
             c.setState(validateInput("State", state));
             System.out.println(c.getState());
+            ArrayList<String> personsInState = personByState.getOrDefault(c.getState(), new ArrayList<>());
+            personsInState.add(fName);
+            personByState.put(c.getState(), personsInState);
 
             c.setZip(validateInput("Zip", zip));
             System.out.println(c.getZip());
@@ -115,11 +124,16 @@ public class AddressBook {
                     case 1:
                         System.out.print("Please enter City: ");
                         String city = scan.next();
-                        List<String> cityList = searchByCity(a, city);
+                        ArrayList<String> cityList = new ArrayList<>();
+                        if (personByCity.containsKey(city)){
+                            cityList = personByCity.get(city);
+                        }
                         if (cityList.size() > 0){
+                            System.out.println("---------------------------");
                             for(String name : cityList){
                                 System.out.println(name);
                             }
+                            System.out.println("---------------------------");
                         } else {
                             System.out.println("---------------------------");
                             System.out.println("No contact found in " + city);
@@ -129,11 +143,17 @@ public class AddressBook {
                     case 2:
                         System.out.print("Please enter State: ");
                         String state = scan.next();
-                        List<String> stateList = searchByState(a, state);
+                        List<String> stateList = new ArrayList<>();
+                        if (personByState.containsKey(state)){
+                            stateList = personByState.get(state);
+                        }
                         if (stateList.size() > 0){
+                            System.out.println("---------------------------");
                             for(String name : stateList){
+
                                 System.out.println(name);
                             }
+                            System.out.println("---------------------------");
                         } else {
                             System.out.println("---------------------------");
                             System.out.println("No contact found in " + state);
