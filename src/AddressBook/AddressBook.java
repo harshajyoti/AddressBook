@@ -1,6 +1,9 @@
 package AddressBook;
 import Exception.CustomException;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -42,7 +45,7 @@ public class AddressBook {
         return contactExists;
     }
 
-    private void add(){
+    private void add(StringBuilder stringBuilder, FileWriter writer) throws IOException {
         // Create a new Object of class Contact
         Contact c = new Contact();
 
@@ -80,11 +83,17 @@ public class AddressBook {
             c.setEmail(validateInput("Email", email));
             System.out.println(c.getEmail());
 
-            // Adding the first name as key and object as value.
-            a.put(c.getFirstName(), c);
-            System.out.println("------------------------------");
-            System.out.println("Contact added to Address book!");
-            System.out.println("------------------------------");
+            // Add the content to CSV file
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(c.getFirstName()).append(",").append(c.getLastName()).append(",").append(c.getAddress()).append(",").append(c.getCity()).append(",").append(c.getState()).append(",").append(c.getZip()).append(",").append(c.getPhoneNum()).append(",").append(c.getEmail()).append("\n");
+
+            try {
+                writer.append(sb.toString());
+            } catch (IOException e) {
+                System.out.println("Something went wrong!");
+                e.printStackTrace();
+            }
         } else{
             System.out.println("----------------------");
             System.out.println("Contact already exist!");
@@ -250,9 +259,23 @@ public class AddressBook {
 
         AddressBook addressBook = new AddressBook();
 
-        // Display the options to the user
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to the Address book Application");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("First Name").append(",").append("Last Name").append(",").append("Address").append(",").append("City").append(",").append("State").append(",").append("Zip").append(",").append("Phone Number").append(",").append("Email").append("\n");
+
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("Data.csv");
+            writer.write(stringBuilder.toString());
+            System.out.println("File Created");
+        } catch (IOException e) {
+            System.out.println("Something went wrong!");
+            e.printStackTrace();
+        }
+
+        // Display the options to the user
         while(true){
             try {
                 System.out.println("1. Add a contact");
@@ -265,7 +288,7 @@ public class AddressBook {
                 int option = scan.nextInt();
                 switch (option){
                     case 1:
-                        addressBook.add();
+                        addressBook.add(stringBuilder, writer);
                         break;
                     case 2:
                         addressBook.displayContact();
@@ -278,6 +301,7 @@ public class AddressBook {
                         break;
                     case 5:
                         System.out.println("Thank you.");
+                        writer.close();
                         System.exit(0);
                     default:
                         System.out.println("----------------------");
